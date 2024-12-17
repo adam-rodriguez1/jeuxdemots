@@ -1,0 +1,7 @@
+bleu #a5c1e8
+
+rouge #ff7062
+beige #fffdf1
+
+jaune #fdca6e
+beige un peu plus fonce #fff9e6

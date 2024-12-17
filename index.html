@@ -5,13 +5,139 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Wordle Clone</title>
     <link rel="stylesheet" href="styles.css" />
+    
+    <script src="https://kit.fontawesome.com/257c44252c.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chango&display=swap" rel="stylesheet">
+
   </head>
   <body>
-    <h1>Wordle Clone</h1>
-    <div class="grid" id="grid"></div>
-    <div id="message"></div>
-    <div id="svg-container"></div>
+    <div class="outergame">
+      <nav class="navbar">
+        <img src="data/mo-mo-mo-high-resolution-logo.png" alt="logo mo-mo-mo" />
 
+        <button id="theme-toggle">Toggle Theme</button>
+      </nav>
+
+      <div class="game-conteiner">
+        <div class="settings-conteiner">
+        
+          
+          <div class="restartbutton">Restart</div>
+          <div class="game-modes-container">
+            <button id="game-modes-button" class="game-modes-button">Modes de jeu</button>
+          </div>
+      
+          <div id="game-modes-modal" class="modal">
+            <div class="modal-content">
+              <span class="close-button" id="close-game-modes">&times;</span>
+              <h2>Modes de Jeu</h2>
+              <div class="mode">
+                <button class="mode-button">Contre la Montre</button>
+                <p class="mode-description">
+                  En 60 secondes, devinez le plus de mots possible.
+                </p>
+              </div>
+              <div class="mode">
+                <button class="mode-button">Mots Rares</button>
+                <p class="mode-description">
+                  Serez-vous capable de trouver les mots peu utilisés ?
+                </p>
+              </div>
+              <div class="mode">
+                <button class="mode-button">libre</button>
+                <p class="mode-description">
+                  mode creatif
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          <div id="rules-modal" class="modal">
+            <div class="modal-content">
+              <span class="close-button" id="close-rules">&times;</span>
+              <h2>Règles du jeu</h2>
+              <p>Devinez le mot secret en un nombre limité de tentatives.</p>
+              <p>Comment jouer :</p>
+              <ul>
+                <li>Entrez un mot de la longueur choisie à l'aide de votre clavier.</li>
+                <li>Appuyez sur Entrée pour valider votre tentative.</li>
+              </ul>
+              <div class="code-color">
+                <div class="green">
+                  <div class="green-ball"></div>
+                  <p>La lettre est correcte et bien placée.</p>
+                </div>
+                <div class="yellow">
+                  <div class="yellow-ball"></div>
+                  <p>La lettre est correcte mais mal placée.</p>
+                </div>
+                <div class="grey">
+                  <div class="grey-ball"></div>
+                  <p>La lettre n’est pas dans le mot.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button id="open-rules-button">Voir les règles</button>
+        </div>
+        <div class="grid-conteiner">
+          <div class="grid" id="grid"></div>
+
+         
+          <div id="message">
+           
+          </div>
+        </div>
+        <div id="time-attack-mode" class="mode-container">
+          <h2>Contre la Montre</h2>
+          <div id="timer-display">60s</div>
+          <button id="start-timer-button">Start</button>
+          <p id="score-display">Score: 0</p>
+          <button id="pass-button">Passer</button>
+        </div>
+        <div class="modedeux">
+          <div id="mot-complique-mode" class="mode-conteiner">
+            <p>Définition :</p>
+          </div>
+          
+          <div class="custom-dropdown" id="word-length-dropdown">
+            <div class="dropdown-header">
+              <span>5 Letters</span>
+              <i class="fa-solid fa-chevron-up"></i>
+            </div>
+            <ul class="dropdown-list">
+              <li data-value="Random">Random Length</li>
+              <li data-value="5">5 Letters</li>
+              <li data-value="6">6 Letters</li>
+              <li data-value="7">7 Letters</li>
+              <li data-value="8">8 Letters</li>
+              <li data-value="9">9 Letters</li>
+              <li data-value="10">10 Letters</li>
+            </ul>
+          </div>
+          
+          <div class="custom-dropdown" id="attempt-dropdown">
+            <div class="dropdown-header">
+              <span>6 Attempts</span>
+              <i class="fa-solid fa-chevron-up"></i>
+            </div>
+            <ul class="dropdown-list">
+              <li data-value="4">4 Attempts</li>
+              <li data-value="5">5 Attempts</li>
+              <li data-value="6">6 Attempts</li>
+              <li data-value="7">7 Attempts</li>
+              
+            </ul>
+          </div>
+      </div>
+    </div>
+        
+        </div>
+      </div>
+ 
+    
     <script src="wordle.js"></script>
   </body>
 </html>
