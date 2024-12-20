@@ -511,11 +511,20 @@ function initializeGame() {
     generateGrid();
   }
 }
+const virtualKeys = document.querySelectorAll(".key");
+
+virtualKeys.forEach((key) => {
+  key.addEventListener("click", (event) => {
+    const keyPressed = event.target.textContent.trim();
+    handleKeyPress({ key: keyPressed });
+  });
+});
 
 function handleKeyPress(event) {
   if (currentRow >= rows) return;
 
-  const key = event.key;
+  const key = event.key || event; // Accept `event.key` for physical and `event` for virtual keys
+  console.log("Key pressed:", key);
 
   if (/^[a-z]$/i.test(key) && currentCol < cols) {
     const cell = document.getElementById(`cell-${currentRow}-${currentCol}`);
