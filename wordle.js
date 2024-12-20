@@ -659,13 +659,13 @@ restartButton.addEventListener("click", () => {
 
 async function loadWords() {
   try {
-    const wordsResponse = await fetch("/data/mots.txt");
+    const wordsResponse = await fetch("/jeuxdemots/data/mots.txt");
     const wordsText = await wordsResponse.text();
     window.validWords = wordsText.split("\n").map((word) => word.trim());
 
     console.log("Mots standards chargés :", window.validWords);
 
-    const rareWordsResponse = await fetch("/data/motsdifficile.json");
+    const rareWordsResponse = await fetch("/jeuxdemots/data/motsdifficile.json");
     const rareWordsData = await rareWordsResponse.json();
     rareWordsWithDefinitions = rareWordsData.words;
 
