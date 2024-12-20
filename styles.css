@@ -919,3 +919,11 @@ body.dark-theme .cell {
     width: 7vw;
   }
 }
+@media (max-height: 680px) {
+  .custom-dropdown {
+    padding: 0;
+  }
+  .restartbutton {
+    padding: 0;
+  }
+}
