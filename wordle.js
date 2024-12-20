@@ -532,10 +532,12 @@ function handleKeyPress(event) {
     currentCol++;
   }
 
-  if (key === "Backspace" && currentCol > 0) {
-    currentCol--;
-    const cell = document.getElementById(`cell-${currentRow}-${currentCol}`);
-    cell.textContent = "";
+  if (key === "Backspace" || key === "⌫") {
+    if (currentCol > 0) {
+      currentCol--;
+      const cell = document.getElementById(`cell-${currentRow}-${currentCol}`);
+      if (cell) cell.textContent = "";
+    }
   }
 
   if (key === "Enter" && currentCol === cols) {
