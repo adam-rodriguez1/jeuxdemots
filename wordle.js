@@ -659,13 +659,17 @@ restartButton.addEventListener("click", () => {
 
 async function loadWords() {
   try {
-    const wordsResponse = await fetch("/jeuxdemots/data/mots.txt");
+    // Fetch standard words from mots.txt
+    const wordsResponse = await fetch("./data/mots.txt"); // Relative path
+    if (!wordsResponse.ok) throw new Error(`Failed to fetch mots.txt: ${wordsResponse.statusText}`);
     const wordsText = await wordsResponse.text();
     window.validWords = wordsText.split("\n").map((word) => word.trim());
 
     console.log("Mots standards chargés :", window.validWords);
 
-    const rareWordsResponse = await fetch("/jeuxdemots/data/motsdifficile.json");
+    // Fetch rare words from motsdifficile.json
+    const rareWordsResponse = await fetch("./data/motsdifficile.json"); // Relative path
+    if (!rareWordsResponse.ok) throw new Error(`Failed to fetch motsdifficile.json: ${rareWordsResponse.statusText}`);
     const rareWordsData = await rareWordsResponse.json();
     rareWordsWithDefinitions = rareWordsData.words;
 
