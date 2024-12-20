@@ -8315,9 +8315,9 @@ envoi
 envoie
 envol
 envolee
-envo�tant
-envo�tement
-envo�ter
+envoutant
+envoutement
+envouter
 envoye
 envoyee
 envoyees
@@ -8374,7 +8374,7 @@ episodes
 episodique
 epistolaire
 epithelium
-ep�tre
+epitre
 eplucher
 epointe
 eponge
@@ -8712,7 +8712,6 @@ eurotunnel
 eurythmique
 eus
 eut
-e�t
 eux
 evacuant
 evacuation
@@ -9082,9 +9081,9 @@ facilite
 facilitee
 faciliter
 facilites
-fa�on
-fa�onner
-fa�ons
+facon
+faconner
+facons
 facteur
 facteurs
 faction
@@ -9839,12 +9838,9 @@ francis
 franciscain
 francisco
 franck
-franc-ma�on
-franc-ma�onnerie
-franc-ma�onnique
 franco
-fran�ois
-fran�oise
+francois
+francoise
 francophone
 francophones
 francophonie
@@ -10010,10 +10006,8 @@ fusionner
 fusions
 fustiger
 fut
-f�t
 fute
 futile
-f�ts
 futur
 future
 futures
@@ -10027,7 +10021,6 @@ gachis
 gadget
 gadgets
 gadoue
-ga�lle
 gaffe
 gage
 gager 
@@ -10232,7 +10225,6 @@ geographie
 geographique
 geographiquement
 geographiques
-ge�le
 geologie
 geometrie
 geophysique

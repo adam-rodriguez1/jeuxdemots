@@ -117,8 +117,7 @@ function updateGameModeUI() {
     wordLengthDropdown.parentElement.style.display = "block";
     attemptDropdown.parentElement.style.display = "block";
   } else if (activeMode === "Contre la Montre") {
-    let isGameActive = false;
-    timeAttackMode.style.display = "block";
+    timeAttackMode.style.display = "flex";
 
     motCompliqueMode.style.display = "none";
     wordLengthDropdown.parentElement.style.display = "none";
@@ -137,9 +136,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const motCompliqueMode = document.getElementById("mot-complique-mode");
   const wordLengthDropdown = document.getElementById("word-length-dropdown");
   const attemptDropdown = document.getElementById("attempt-dropdown");
+  const restartButton = document.querySelector(".restartbutton");
+  const keyAndMessage = document.querySelector(".key-and-message");
 
-  function toggleDisplay(element, show) {
-    element.style.display = show ? "block" : "none";
+  // Enhanced toggleDisplay function
+  function toggleDisplay(element, show, displayType = "block") {
+    element.style.display = show ? displayType : "none";
   }
 
   modeButtons.forEach((button) => {
@@ -169,20 +171,26 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       if (activeMode === "Contre la Montre") {
-        toggleDisplay(timeAttackMode, true);
+        toggleDisplay(timeAttackMode, true, "flex");
         toggleDisplay(motCompliqueMode, false);
         toggleDisplay(wordLengthDropdown, false);
         toggleDisplay(attemptDropdown, false);
+        restartButton.textContent = "Redémarrer";
+        toggleDisplay(keyAndMessage, true, "flex");
       } else if (activeMode === "libre") {
         toggleDisplay(timeAttackMode, false);
         toggleDisplay(motCompliqueMode, false);
         toggleDisplay(wordLengthDropdown, true);
         toggleDisplay(attemptDropdown, true);
+        restartButton.textContent = "Suivant";
+        toggleDisplay(keyAndMessage, true, "flex");
       } else if (activeMode === "Mots Compliqué" || activeMode === "Mots Rares") {
         toggleDisplay(timeAttackMode, false);
         toggleDisplay(motCompliqueMode, true);
         toggleDisplay(wordLengthDropdown, false);
         toggleDisplay(attemptDropdown, false);
+        restartButton.textContent = "Suivant";
+        toggleDisplay(keyAndMessage, true, "flex");
       }
 
       gameModesModal.style.display = "none";
@@ -200,21 +208,75 @@ let timer;
 let timeLeft = 60;
 let score = 0;
 let isGameActive = false;
-
 function startCountdown() {
+  const countdown = document.getElementById("countdown");
+  const countdownNumber = document.getElementById("countdown-number");
+  const goMessage = document.getElementById("go-message");
   let countdownTime = 3;
-  timerDisplay.textContent = countdownTime;
 
-  countdown = setInterval(() => {
+  // Reset states
+  countdownNumber.textContent = countdownTime;
+  goMessage.classList.remove("show");
+  countdown.classList.add("show");
+
+  const interval = setInterval(() => {
     countdownTime--;
-    timerDisplay.textContent = countdownTime;
 
-    if (countdownTime === 0) {
-      clearInterval(countdown);
-      startGame();
+    if (countdownTime > 0) {
+      countdownNumber.textContent = countdownTime;
+
+      // Restart animation
+      countdownNumber.style.animation = "none";
+      void countdownNumber.offsetWidth; // Trigger reflow
+      countdownNumber.style.animation = "";
+    } else {
+      clearInterval(interval);
+
+      // Show "GO!" message
+      countdownNumber.style.display = "none";
+      goMessage.classList.add("show");
+
+      setTimeout(() => {
+        goMessage.classList.remove("show");
+        countdown.classList.remove("show");
+        countdownNumber.style.display = ""; // Reset for next use
+        startGame(); // Start the game
+      }, 500); // Match this with the "GO" animation duration
     }
   }, 1000);
 }
+document.addEventListener("DOMContentLoaded", () => {
+  const menuToggle = document.getElementById("menu-toggle");
+  const mobileMenu = document.getElementById("mobile-menu");
+  const themeToggleMobile = document.getElementById("theme-toggle-mobile");
+  const gameModesButtonMobile = document.getElementById("game-modes-button-mobile");
+  const openRulesButtonMobile = document.getElementById("open-rules-button-mobile");
+
+  // Toggle the mobile menu
+  menuToggle.addEventListener("click", () => {
+    mobileMenu.style.display = mobileMenu.style.display === "flex" ? "none" : "flex";
+  });
+
+  // Mobile theme toggle
+  themeToggleMobile.addEventListener("click", () => {
+    document.body.classList.toggle("dark-theme");
+  });
+
+  // Mobile game modes button
+  gameModesButtonMobile.addEventListener("click", () => {
+    const gameModesModal = document.getElementById("game-modes-modal");
+    gameModesModal.style.display = "block";
+    mobileMenu.style.display = "none"; // Hide menu after clicking
+  });
+
+  // Mobile rules button
+  openRulesButtonMobile.addEventListener("click", () => {
+    const rulesModal = document.getElementById("rules-modal");
+    rulesModal.style.display = "block";
+    mobileMenu.style.display = "none"; // Hide menu after clicking
+  });
+});
+
 function resetGridAndWord() {
   clearGrid();
   generateGrid();
@@ -262,7 +324,7 @@ function startGame() {
   score = 0;
   scoreDisplay.textContent = `Score: ${score}`;
   timerDisplay.textContent = `${timeLeft}s`;
-
+  startButton.disabled = true;
   resetGridAndWord();
   console.log("le jeu contre la montre est" + isGameActive);
 
@@ -297,6 +359,9 @@ function wordGuessedCorrectly() {
 startButton.addEventListener("click", () => {
   if (!isGameActive) {
     startCountdown();
+    setTimeout(() => {
+      restartButton.style.display = "block";
+    }, "3500");
   }
 });
 
@@ -370,7 +435,7 @@ function checkAndColorWord(guessedWord) {
 
 function generateGrid() {
   clearGrid();
-  gridContainer.style.gridTemplateColumns = `repeat(${cols}, 50px)`;
+  gridContainer.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
   for (let row = 0; row < rows; row++) {
     for (let col = 0; col < cols; col++) {
       const cell = document.createElement("div");
@@ -380,7 +445,12 @@ function generateGrid() {
     }
   }
 }
+function updateCellDimensions(cols, rows) {
+  document.documentElement.style.setProperty("--cell-count", cols);
+  document.documentElement.style.setProperty("--row-count", rows);
 
+  generateGrid();
+}
 function initializeGame() {
   if (activeMode === "libre") {
     const lengthHeader = document.querySelector("#word-length-dropdown .dropdown-header");
@@ -576,11 +646,11 @@ restartButton.addEventListener("click", () => {
     score = 0;
     isGameActive = false;
     gridContainer.innerHTML = "";
-
     timerDisplay.textContent = `${timeLeft}s`;
     scoreDisplay.textContent = `Score: ${score}`;
-
+    startButton.disabled = false;
     console.log("Le mode Contre la Montre a été réinitialisé.");
+    restartButton.style.display = "none";
   } else {
     initializeGame();
     console.log("Le jeu a été réinitialisé dans le mode :", activeMode);
